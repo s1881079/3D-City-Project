@@ -1,0 +1,7 @@
+4.8 - inits
+gcpURL.py
+automatic download google street view using information from gsv_info.csv
+gsv_info.csv
+slightly corrected from the previous version since the size of image changed
+imgs/
+save the GSVimages
