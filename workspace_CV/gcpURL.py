@@ -15,8 +15,9 @@ def genGsvUrl(dict_info):
     
     
     
-def csvInfoToList(dt_frame):
+def csvInfoToDict(dt_frame):
     str_key = 'AIzaSyC8cvzlqA7P5-S12LpgECrg_0nYpmAMiTw'
+    #key deleted
     rst = []
     str_size = '640x640'
     for ind,rc in dt_frame.iterrows():
@@ -34,7 +35,7 @@ def saveImg(lst_url,str_id = 0):
 if __name__ == "__main__":
     filename = 'gsv_info.csv'
     data = pd.read_csv(filename)
-    list_all = csvInfoToList(data)
+    list_all = csvInfoToDict(data)
     list_url = []
     
     #print url
