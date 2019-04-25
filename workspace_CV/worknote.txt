@@ -1,7 +1,58 @@
-4.8 - inits
+4.8 - inits============================
 gcpURL.py
 automatic download google street view using information from gsv_info.csv
 gsv_info.csv
 slightly corrected from the previous version since the size of image changed
 imgs/
 save the GSVimages
+
+4.14======================================
+dld_iods.py
+logic of the code make sense - but need to set up object detection API to step further
+
+4.17=======================================
+Setting up environment for running tensorflow
+Magnus's suggestion: running it on university's reserch compute cluster - eddie
+permission denied - fixing currently
+
+Local installation
+prorc - environmental variable setting done
+object detection model setup issue
+TODO: C++ version update to 9.0
+
+XRDP installation
+not supproting SSE4.1, therefore might mot be able to run tensorflow this way
+
+NOTE:
+- the computer vision stuff might take longer than you expected,
+therefore yu can start to get familiar with the Unity stuff first and write about the tech repos 
+
+4.23================================================
+tensorflow-gpu environment not properly setup
+list of Q for magnus:
+edditing codes in eddie
+tensorflow for use 
+
+bring your own laptop and try to run module detection stuff
+-the last question should be solved by installing absl pckages
+
+4.24=======================================================
+tensorflow-gpu encironment problem fixed
+note on fixing:
+- need to use qlogin -pe gpu 1 to login to the backend of ecdf
+- qsub used to submit the bash file for running codes
+- qstat for viewing the current status
+
+NOTE:
+the download procees should have already finished the step of setting tfrecord as well 
+check the difference of the two codes and try
+
+4.25=====================================================
+open image dataset download succeeded
+figures:
+of all 499440 images:
+4290 contain doors
+12 format error
+9 url error
+4269 images are used
+result: Door.tfrecord file in scratch space, move to somewhere if needed
