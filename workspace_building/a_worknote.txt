@@ -23,6 +23,11 @@ use the first strategy, if distance larger than threshold, ture to two
 problem:
 threshold setting
 
+4.23
+NEW problem occurs:
+when trying visualization in using mapbox
+the field of max heigh and min height need to be further process
+or else some buildings are hidden under ground level
 
 4.9
 mtch_dbs.py
