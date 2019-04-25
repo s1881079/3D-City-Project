@@ -184,8 +184,8 @@ def genLineOfSight(cam_pt, distance,ct_ang = 0):
     else:
         #invalid center_angle
         return None
-    edpt_x = cam_pt['x'] + distance * math.sin(math.radians(cam_pt['heading']))
-    edpt_y = cam_pt['y'] + distance * math.cos(math.radians(cam_pt['heading']))
+    edpt_x = cam_pt['x'] + distance * math.sin(math.radians(cam_pt['heading'] + ct_ang))
+    edpt_y = cam_pt['y'] + distance * math.cos(math.radians(cam_pt['heading'] + ct_ang))
     endpt = shg.Point(edpt_x,edpt_y)
     stpt = shg.Point(cam_pt['x'],cam_pt['y'])
     
