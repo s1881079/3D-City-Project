@@ -39,7 +39,7 @@ bring your own laptop and try to run module detection stuff
 4.24=======================================================
 tensorflow-gpu encironment problem fixed
 note on fixing:
-- need to use qlogin -pe gpu 1 to login to the backend of ecdf
+- need to use qlogin -pe gpu 1 -l h_vmem=16G to login to the backend of ecdf
 - qsub used to submit the bash file for running codes
 - qstat for viewing the current status
 
@@ -56,3 +56,8 @@ of all 499440 images:
 9 url error
 4269 images are used
 result: Door.tfrecord file in scratch space, move to somewhere if needed
+
+4.29=========================================================
+eddie does not support CUDA9, which means it cannot use the object detection API, and i don't think they will update their computing kernel installed
+
+however i finally got the API running on my CPU - slower though, could try to move forward to the training part: need to move the rf records from eddie to local
