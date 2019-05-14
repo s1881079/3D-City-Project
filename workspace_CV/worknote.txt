@@ -61,3 +61,37 @@ result: Door.tfrecord file in scratch space, move to somewhere if needed
 eddie does not support CUDA9, which means it cannot use the object detection API, and i don't think they will update their computing kernel installed
 
 however i finally got the API running on my CPU - slower though, could try to move forward to the training part: need to move the rf records from eddie to local
+
+$ scp Door_train.tfrecord ssh.geos.ed.ac.uk:/home/s1881079
+
+fixing bugs in the former script for downloading door images - number of images 
+updating schema for spliting training and testing 
+## NUMBER OF TRAINING IMAGE IS SMALLER THAN I THOUGHT
+
+door img:165
+
+trian img:115
+
+format error_train:9
+
+url error_train8
+
+test img:29
+
+format error test:3
+
+url error test1
+
+
+information specified in https://www.learnopencv.com/fast-image-downloader-for-open-images-v4/
+Door images:
+train19256
+validation165
+test524
+
+test and validation set are all human corrected - which would be better to use in trainning model.
+
+5.11 ==================================================
+strategy changed:
+using vision API to identify door, put matching process after computer vision process
+before matching, the input data should contain the information of the door location
