@@ -44,3 +44,10 @@ function tested using sample data
 techdoc drafted 
 match v0.0 - finished
 
+5.27
+match combined with computer vision output
+BDmain.py
+tested with several inputs
+same door multidetection - 50cm and 20cm offset
+out of 9 doors - 5 detected - get more images for testing
+ 
