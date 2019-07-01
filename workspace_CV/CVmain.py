@@ -42,8 +42,14 @@ def urlToCmPt():
     all_window = []
     all_other  = []
     
+    #create a general function - input the list of gsv,image folder name,output list of semimg object
+    #lst_simgs = ip.resp_process.genSimgLst(lst_gsv,lst_imgfn)
+    
     for img_fn in lst_imgfn:
         lst_doors,lst_windows,lst_others = ip.resp_process.objDetect(lst_gsv,img_fn)
+        #lst_bbxs = ip.resp_process.objDetect(lst_gsv,img_fn)
+        #sem_img = SemImg()
+        #structure need to be changed here
         all_door += lst_doors
         all_window += lst_windows
         all_other += lst_others
@@ -54,6 +60,9 @@ def urlToCmPt():
     ip.gen_process.writeObjInfoCsv(all_door,img_folder,'otherBbx.csv')
     
     cam_pts = ip.gen_process.convFormat(all_door)
+    
+    #return lst_simgs
+    
     return cam_pts
 
 def urlToCmLoc():

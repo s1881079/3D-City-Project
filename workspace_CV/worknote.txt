@@ -95,3 +95,13 @@ test and validation set are all human corrected - which would be better to use i
 strategy changed:
 using vision API to identify door, put matching process after computer vision process
 before matching, the input data should contain the information of the door location
+
+5.21===================================================
+including test image set
+door_img:689
+train_img 503
+format_error 25
+url error 23
+test img 126
+format error 2
+url error 10
