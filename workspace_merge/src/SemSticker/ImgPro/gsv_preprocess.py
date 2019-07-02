@@ -12,11 +12,11 @@ import urllib.request as req
 
 from .gsv import GSV
 
-__all__ = ['downloadGSV','csvParaToLstObj','ggeUrlToLstObj','genLstDlUrl','downloadImgFromLst','genImgFnList','genCamlocFromTxt','setSeqFn']
+__all__ = ['downloadGSV','csvParaToLstGsv','urlTxtToLstGsv','genLstDlUrl','downloadImgFromLst','genImgFnList','genCamlocFromTxt','setSeqFn']
 
-def downloadGSV(gge_url,img_folder,key,fix_std = False):
+def downloadGSV(lst_gsv,img_folder,key,fix_std = False):
     
-    lst_gsv = ggeUrlToLstObj(gge_url,fix_std)
+    #lst_gsv = urlTxtToLstGsv(gge_url,fix_std)
     #num_img = len(lst_gsv)
     
 #    #downloading GSV images - COMMAND THIS PART WHEN SECOND TEST
@@ -25,9 +25,12 @@ def downloadGSV(gge_url,img_folder,key,fix_std = False):
     
     setSeqFn(lst_gsv)
     
-    return lst_gsv
+    #return lst_gsv
 
-def csvParaToLstObj(csv_fname):
+def genGsvObj(gsv_folder,gsv_info_csv):
+    return None
+
+def csvParaToLstGsv(csv_fname):
     '''
     from a standart csv file specifying parameters to gsv object list
     '''
@@ -47,20 +50,22 @@ def csvParaToLstObj(csv_fname):
     for line in lines:
         paras = line[:-1].split(',')
         img_id = int(paras[0])
-        lat = float(paras[1])
-        lon = float(paras[2])
-        alt = float(paras[3])
-        fov = float(paras[4])
-        heading = float(paras[5])
-        tilt = float(paras[6])
-        gsv = GSV([img_id,lat,lon,alt,fov,heading,tilt])
+        fn = paras[1]
+        lat = float(paras[2])
+        lon = float(paras[3])
+        alt = float(paras[4])
+        fov = float(paras[5])
+        heading = float(paras[6])
+        pitch = float(paras[7])
+        gsv = GSV([img_id,lat,lon,alt,fov,heading,pitch],inPitch = True)
+        gsv.setFn(fn,withExt = True)
         rst.append(gsv)
         
     return rst
         
 
 
-def ggeUrlToLstObj(txt_fname,fix_std):
+def urlTxtToLstGsv(txt_fname,fix_std):
     '''
     from a txt file containing google earth urls to list of GSVImg objects
     fix_std: fix the tilt to 0 and fov to 60
@@ -70,7 +75,7 @@ def ggeUrlToLstObj(txt_fname,fix_std):
         urls = inf.readlines()
         
     inf.close()
-    rst = []
+    lst_gsv = []
     img_id = 0
     
     for url in urls:
@@ -86,10 +91,10 @@ def ggeUrlToLstObj(txt_fname,fix_std):
             fov = 60
             tilt = 90
         gsv = GSV([img_id,lat,lon,alt,fov,heading,tilt])
-        rst.append(gsv)
+        lst_gsv.append(gsv)
         img_id += 1
     
-    return rst      
+    return lst_gsv     
     
 def genLstDlUrl(lst_gsv,key,sec = ''):
     '''

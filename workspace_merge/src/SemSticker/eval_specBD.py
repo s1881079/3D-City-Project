@@ -22,10 +22,11 @@ if __name__ == '__main__':
     key = ip.gen_process.getExtInfo(key_txt)
     
     #pure generate gsv object list
-    lst_gsv = ip.ggeUrlToLstObj(url_txt,False)
+    lst_gsv = ip.urlTxtToLstGsv(url_txt,False)
     ip.setSeqFn(lst_gsv)
     
     #pure download images
-    lst_dlurl = ip.genLstDlUrl(lst_gsv,key)
-    ip.downloadImgFromLst(lst_dlurl,img_folder)
+    ip.downloadGSV(lst_gsv,img_folder,key)
+#    lst_dlurl = ip.genLstDlUrl(lst_gsv,key)
+#    ip.downloadImgFromLst(lst_dlurl,img_folder)
     
