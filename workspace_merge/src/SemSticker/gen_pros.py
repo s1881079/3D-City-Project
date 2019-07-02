@@ -17,7 +17,7 @@ import os
 
 __all__ = ['urlToSimg','locateDoors','writeDoors']
 
-def urlToSimg(url_txt,img_folder,key_txt,*,outputCamloc = False,outBbxloc = False,detection_src = 'Google_Cloud_Vision',segment_img = False):
+def urlToSimg(config_dict,*,outputCamloc = False,outBbxloc = False):
     '''
     from urls to SemImg objects
     
@@ -45,20 +45,34 @@ def urlToSimg(url_txt,img_folder,key_txt,*,outputCamloc = False,outBbxloc = Fals
         list of SemImg objects
         
     '''
-    key = ip.gen_process.getExtInfo(key_txt)
+    #key = ip.gen_process.getExtInfo(key_txt)
+    key = config_dict['authority']['key_txt']
+    input_form = config_dict['input_data']['input_form']
+     
     
-    if os.path.exists(img_folder,) is False:
-        os.makedirs(img_folder)
+    #download googl street view from txt url form
+    if input_form == 'gge_url_txt': 
+        url_txt = config_dict['input_data']['url_txt']
+        dlimg_folder = config_dict['intm_info']['img_folder']
         
-    lst_gsv = ip.downloadGSV(url_txt,img_folder,key)
-    print('google street view downloaded')
-    
-    #fn_list = os.listdir(img_folder)
-    #lst_imgfn = ip.gsv_preprocess.genImgFnList(img_folder,fn_list)
+        if os.path.exists(dlimg_folder,) is False:
+            os.makedirs(dlimg_folder)
+            
+        lst_gsv = ip.urlTxtToLstGsv(url_txt)
+        ip.downloadGSV(lst_gsv,dlimg_folder,key)
+        print('google street view downloaded')
+        img_folder = dlimg_folder
+        
+    #img folder + csv info form
+    elif input_form == 'gsvImg_and_infoCsv':
+        gsv_folder = config_dict['input_data']['ori_gsv_folder']
+        gsv_info_csv = config_dict['input_data']['gsv_info_csv']
+        lst_gsv = ip.csvParaToLstGsv(gsv_info_csv)
+        img_folder = gsv_folder
     
     #might need selection control function in simg_process 
     
-    lst_simgs = control_genLstSimg(lst_gsv,img_folder,detection_src,segment_img)
+    lst_simgs = control_genLstSimg(lst_gsv,img_folder,config_dict['pros_params'])
     
 #    if detection_src == 'Google_Cloud_Vision':
 #        lst_simgs = ip.resp_process.genSimgLst(lst_gsv,img_folder)
@@ -79,13 +93,17 @@ def urlToSimg(url_txt,img_folder,key_txt,*,outputCamloc = False,outBbxloc = Fals
     
     return lst_simgs
 
-def control_genLstSimg(lst_gsv,img_folder,detection_src,segment_img):
-    if segment_img:
+def control_genLstSimg(lst_gsv,img_folder,pros_params):
+    segment_img = pros_params['Image_Segmentation']['Execute']
+    detection_src = pros_params['object_detection_src']
+    
+    if segment_img == 'True':
         lst_simg = []
         if detection_src == 'Google_Cloud_Vision':
             print('inside select gcv_seg branch')
             for gsv in lst_gsv:
                 lst_simg.append(ip.extSegSimg(gsv,img_folder,detection_src))
+        #TODO: adding hardcode form adn tensorflow form
     else:
         lst_simg = ip.resp_process.genSimgLst(lst_gsv,img_folder)
         

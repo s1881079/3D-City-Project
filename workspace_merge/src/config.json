@@ -1,28 +1,34 @@
 {
-    'input_data' : {
-	'url_txt': '../data/gge_url_test_ggeurl.txt',
-	'bd_shp' : '../data/building_footprint/resstreet_clip.shp'
-
+    "authority" : {
+	"key_txt" : "../../../locked/GSVdl_key.txt"},
+  "input_data" : {
+  "input_form" : "gge_url_txt",
+  "input_form_selection" : ["gge_url_txt","gsvImg_and_infoCsv"],
+	"url_txt": "../data/gge_url_test_ggeurl.txt",
+  "ori_gsv_folder" : "../data/gsvs",
+  "gsv_info_csv" : "../data/gsv_info.csv",
+	"bd_shp" : "../data/building_footprint/resstreet_clip.shp"
     },
-    'intm_info' : {
-	'img_folder' : '../imtm_output/images/',
-	'write_Simg_Info' : False,
-	'write_Bbx_Info' ; False
+  "intm_info" : {
+	"img_folder" : "../imtm_output/images/",
+	"write_Simg_Info" : "False",
+      "write_Bbx_Info" : "False"
     },
-    'output_info' : {
-	'result_folder' : '../result/',
-	'output_csv' : 'testdoors.csv'
-    ),
-    'pros_params' : {
-	'sight_distance' : 50,
-	'min_objsep' : 0.6,
-	'object_detection_src' : 'Google_Cloud_Vision',
-	'Image_Segmentation' : {
-	    'Execute' : False,
-	    'min_x' : 50,
-	    'min_y' : 70,
-	    'max_wh_offset' : 300
+    "output_info" : {
+	"result_folder" : "../result/",
+	"output_csv" : "testdoors.csv"
+},
+    "pros_params" : {
+	"sight_distance" : 50,
+	"min_objsep" : 0.6,
+	"object_detection_src" : "Google_Cloud_Vision",
+	"od_src_selection" : ["Google_Cloud_Vision","Customeize_Model","Hardcode_Mode"],
+	"Image_Segmentation" : {
+	    "Execute" : "False",
+	    "min_x" : 50,
+	    "min_y" : 70,
+	    "max_wh_offset" : 300
 	}
     }
-    
+
 }
