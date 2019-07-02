@@ -46,7 +46,8 @@ def urlToSimg(config_dict,*,outputCamloc = False,outBbxloc = False):
         
     '''
     #key = ip.gen_process.getExtInfo(key_txt)
-    key = config_dict['authority']['key_txt']
+    key_txt = config_dict['authority']['key_txt']
+    key = ip.gen_process.getExtInfo(key_txt)
     input_form = config_dict['input_data']['input_form']
      
     
@@ -111,7 +112,7 @@ def control_genLstSimg(lst_gsv,img_folder,pros_params):
         
 
     
-def locateDoors(lst_simg,bdshp_fdir,sight_distance = 50,min_sepdoor =  0.6):
+def locateDoors(lst_simg,config_dict):
     '''
     find door locations by line of sight hitting strategy
     
@@ -134,6 +135,12 @@ def locateDoors(lst_simg,bdshp_fdir,sight_distance = 50,min_sepdoor =  0.6):
     list
         list of SuspObj objects indicating doors in reality
     '''
+    
+    bdshp_fdir = config_dict['input_data']['bd_shp']
+    sight_distance = config_dict['pros_params']['sight_distance']
+    min_sepdoor = config_dict['pros_params']['min_objsep']
+    
+    
     bds_shp = mb.readShp(bdshp_fdir)
     bds_geom = mb.toSplGeom(bds_shp)
     
@@ -158,16 +165,20 @@ def locateDoors(lst_simg,bdshp_fdir,sight_distance = 50,min_sepdoor =  0.6):
            drbbx.setSusObj(dr_susobj)
         
     #after this process, all bbx would contain the suspect object information
-    uniq_objs = findUniqueDetection(lst_simg,0.6)
+    uniq_objs = findUniqueDetection(lst_simg,min_sepdoor)
     
     return uniq_objs
     
 
-def writeDoors(lst_doors,out_folder,out_csv):
+def writeDoors(lst_doors,config_out):
     '''
     write door suspobj to csv
     '''
     #pending function for writing door object to csv
+    
+    out_folder = config_out['result_folder']
+    out_csv = config_out['output_csv']
+    
     ip.gen_process.writeObjInfoCsv(lst_doors,out_folder,out_csv)
 
 
