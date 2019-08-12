@@ -149,6 +149,7 @@ def fixMultiDetection(cam_pts,min_dis):
 def fixReptt(fixed_rst,temp_block,last_block_count,min_dis):
     '''
     update fixed result based on the new input and min-distance
+    *might become ghost function after los hitting strategy is built in the simg process
     
     Parameters
     ==========

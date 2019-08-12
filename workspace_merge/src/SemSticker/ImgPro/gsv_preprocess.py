@@ -12,7 +12,7 @@ import urllib.request as req
 
 from .gsv import GSV
 
-__all__ = ['downloadGSV','csvParaToLstGsv','urlTxtToLstGsv','genLstDlUrl','downloadImgFromLst','genImgFnList','genCamlocFromTxt','setSeqFn']
+__all__ = ['downloadGSV','csvParaToLstGsv','urlTxtToLstGsv','genLstDlUrl','downloadImgFromLst','genImgFnList','setSeqFn']
 
 def downloadGSV(lst_gsv,img_folder,key,fix_std = False):
     
@@ -38,7 +38,7 @@ def csvParaToLstGsv(csv_fname):
     inf = open(csv_fname,'r')
     head = inf.readline()[:-1]
     
-    if len(head.split(',')) != 7:
+    if len(head.split(',')) != 8:
         print('wrong number of colums, check the input file format')
         return None
         
@@ -65,7 +65,7 @@ def csvParaToLstGsv(csv_fname):
         
 
 
-def urlTxtToLstGsv(txt_fname,fix_std):
+def urlTxtToLstGsv(txt_fname,fix_std = False):
     '''
     from a txt file containing google earth urls to list of GSVImg objects
     fix_std: fix the tilt to 0 and fov to 60
@@ -91,8 +91,11 @@ def urlTxtToLstGsv(txt_fname,fix_std):
             fov = 60
             tilt = 90
         gsv = GSV([img_id,lat,lon,alt,fov,heading,tilt])
+        
         lst_gsv.append(gsv)
         img_id += 1
+    
+    setSeqFn(lst_gsv)
     
     return lst_gsv     
     
@@ -132,47 +135,7 @@ def genImgFnList(img_folder,all_fn):
         
     return lst_img
 
-def genCamlocFromTxt(txt_fn,csv_folder,csv_fn):
-    '''
-    generate campera location from txt of urls from gge, write as csv
-    '''
-    with open(txt_fn,'r') as inf:
-        urls = inf.readlines()
-        
-    inf.close()
-    loc_list = []
-    loc_id = 0
-    
-    for url in urls:
-        print(url)
-        paras = re.search('\@(.*),',url).group()[1:-1].split(',')
-        lat = float(paras[0])
-        lon = float(paras[1])
-        alt = float(paras[2][:-1])
-        heading = float(paras[5][:-1])
-        
-        osgb36 = pyproj.Proj(init = 'epsg:27700')
-        wgs84 = pyproj.Proj(init='epsg:4326')
-        
-        mapx,mapy = pyproj.transform(wgs84,osgb36,lon,lat)
-        rec = [loc_id,lon,lat,alt,heading,mapx,mapy]
-        
-        if rec not in loc_list:
-            loc_list.append(rec)
-            loc_id += 1
-        
-    
-    
-    camloc_file = csv_folder + csv_fn
-    with open(camloc_file, 'w') as wfile:
-        headlist = ['camloc_id','lon','lat','alt','ori_heading','mapx','mapy']
-        line = ','.join(headlist)
-        wfile.write(line + '\n')
-        for loc in loc_list:
-            line = ','.join([str(i) for i in loc])
-            wfile.write(line + '\n')
-            
-    wfile.close()
+
     
 def setSeqFn(lst_gsv):
     for gsv in lst_gsv:

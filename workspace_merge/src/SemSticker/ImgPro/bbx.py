@@ -39,7 +39,6 @@ class Bbx:
         self.gsv_id = int_id
         
     def setSusObj(self,susobj):
-        print('setting suspect object in box')
         self.susObj = susobj
         
     def moveBound(self,movex,movey):
@@ -51,11 +50,11 @@ class Bbx:
     def adaptView(self,roi_info,full_size):
         orx = self.ctx
         nx = self.ctx * roi_info[3] + roi_info[1]
-        self.ctx = nx / full_size[0]
+        self.ctx = nx / 640
         
         ory = self.cty
         ny = self.cty * roi_info[4] + roi_info[2]
-        self.cty = ny / full_size[1]
+        self.cty = ny / 640
         movex = self.ctx - orx
         movey = self.cty - ory
         
@@ -103,6 +102,9 @@ class Bbx:
         
         self.los = in_los
         
+    def setLosPitch(self,lospitch):
+        self.los_pitch = lospitch
+        
     def imgCoorToAng(self,img_fov,img_size,nor=True):
         '''
         generate line of sight based on the coordinate specified in the image
@@ -132,11 +134,17 @@ class Bbx:
         x = self.ctx
         y = self.cty
         
+        print('x',x)
+        print('y',y)
+        
         if nor:
             pass
         else:
-            x = x / img_size
-            y = y / img_size
+            x = x / 640
+            y = y / 640
+            
+        print('x',x)
+        print('y',y)
             
         yaw = img_fov * (x - 0.5)
         tilt = img_fov * (0.5 - y)

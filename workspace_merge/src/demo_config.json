@@ -1,0 +1,39 @@
+{
+    "authority" : {
+	"key_txt" : "../../locked/GSVdl_key.txt",
+    "gg_credential" : "../../locked/GSVdl-600f404afce8.json"},
+  "input_data" : {
+  "input_form" : "gsvImg_and_infoCsv",
+	"url_txt": "../data/gge_url/demo_gge_url.txt",
+  "ori_gsv_folder" : "../data/pre_download_info/images/",
+  "gsv_info_csv" : "../data/pre_download_info/demo_gsv_paras.csv",
+	"bd_shp" : "../data/building_footprint/resstreet_clip.shp"
+    },
+  "intm_info" : {
+	"img_folder" : "../intm_output/demo_images/",
+	"write_Simg_Info" : {
+		"Execute" : "True",
+		"out_folder" : "../intm_output/"
+	},
+      "write_Bbx_Info" : {
+		"Execute" : "True",
+		"out_folder" : "../intm_output/"
+	}
+    },
+    "output_info" : {
+	"result_folder" : "../result/",
+	"output_csv" : "testdoors_demo.csv"
+},
+    "pros_params" : {
+	"sight_distance" : 50,
+	"min_objsep" : 0.6,
+	"object_detection_src" : "Google_Cloud_Vision",
+	"Image_Segmentation" : {
+	    "Execute" : "True",
+	    "min_x" : 50,
+	    "min_y" : 70,
+	    "max_wh_offset" : 300
+	}
+    }
+
+}

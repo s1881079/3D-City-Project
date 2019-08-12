@@ -8,8 +8,9 @@ Created on Sun Jun 16 14:12:34 2019
 
 #from .simg import SemImg
 import numpy as np
+import math
 
-__all__ = ['getBbxsByType','findUniqueDetection']
+__all__ = ['getBbxsByType','findUniqueDetection','getZValue']
 
 def getBbxsByType(lst_simg,tp_name = 'Door'):
     rst = []
@@ -34,6 +35,9 @@ def getBbxsByType(lst_simg,tp_name = 'Door'):
     return rst
 
 def filtWithDoors(lst_simg):
+    '''
+    find all the simg with doors noticed
+    '''
     rst = []
     for simg in lst_simg:
         if simg.alldoors != []:
@@ -163,4 +167,16 @@ def caulcObjDisMatrix(lst_doors):
             
     return dis_mat
             
-            
+def getZValue(simg,bbx,obj_loc,tar_bd_base_alt):
+    if bbx.name == 'Door':
+        return 0
+    
+    elif bbx.name == 'Window':
+        dis = (simg.cam_x - obj_loc[0]) * (simg.cam_x - obj_loc[0]) + (simg.cam_y - obj_loc[1]) * (simg.cam_y- obj_loc[1])
+        dis = math.sqrt(dis)
+        
+        window_alt = dis * math.tan(math.radians(bbx.los_pitch + simg._gsv.pitch)) + simg._gsv.altitude
+        window_height = window_alt - tar_bd_base_alt
+        return window_height
+        
+        

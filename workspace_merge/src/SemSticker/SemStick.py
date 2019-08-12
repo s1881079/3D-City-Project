@@ -6,15 +6,33 @@ Created on Mon Jun 17 13:42:50 2019
 @author: s1881079
 """
 
-from gen_pros import *
+from .gen_pros import *
 import json
+import time
 
 __all__ = ['semStick']
 
-def semStick(config_dict):  
+def semStick(config_dict):
+    '''
+    main pipeline for detecting and adding doors to building footprint data
+    parameters are specitied in the configuration file
+    '''
+    
+    #generate sematic image list
+    start = time.time()
     lst_simg = urlToSimg(config_dict,outputCamloc = True,outBbxloc = True)
+    after_cv = time.time()
+    cv_time = after_cv - start
+    
+    #generate building component lsit
     detected_doors = locateDoors(lst_simg,config_dict)
-    writeDoors(detected_doors,config_dict['ouput_info'])
+    after_locate = time.time()
+    locate_time= after_locate - after_cv
+    
+    print('cv_time and locate_time',cv_time,locate_time)
+    
+    #output result
+    writeDoors(detected_doors,config_dict['output_info'])
 
 #
 #if __name__ == "__main__":

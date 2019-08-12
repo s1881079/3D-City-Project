@@ -11,9 +11,11 @@ from .bbx import Bbx
 #from .. import simg.SemImg
 #from .gsv import GSV
 
-import sys
-sys.path.append('../')
-from simg import SemImg
+#import sys
+#sys.path.append('../')
+#from simg import SemImg
+
+from .. import simg
 
 from .ggvision import localize_objects
 
@@ -55,14 +57,14 @@ def objDetect(lst_gsv,img_fn):
     return lst_doors,lst_windows,lst_others 
     
 
-def genSimgLst(lst_gsv,image_folder):
+def genSimgLst(lst_gsv,image_folder,gg_cred):
     lst_simg = []
     
     for gsv in lst_gsv:
         imgdir = image_folder + gsv.fn
-        resps = localize_objects(imgdir)
+        resps = localize_objects(imgdir,gg_cred)
         lst_bbxs = respToBbxObjs(resps)
-        simg_obj = SemImg(gsv,lst_bbxs)
+        simg_obj = simg.SemImg(gsv,lst_bbxs)
         lst_simg.append(simg_obj)
         
     

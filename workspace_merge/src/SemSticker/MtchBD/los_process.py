@@ -85,10 +85,19 @@ def imgCoorToLos(img_fov,x,y,nor=True,img_size = 640):
         x = x / img_size
         y = y / img_size
         
-    yaw = img_fov * (x - 0.5)
-    tilt = img_fov * (0.5 - y)
-    print('yaw:',yaw,'tilt',tilt)
-    return yaw,tilt
+    yaw_pre = img_fov * (x - 0.5)
+    tilt_pre = img_fov * (0.5 - y)
+    
+    r_fov = math.radians(img_fov)
+    x = x - 0.5
+    y = 0.5 - y
+    alfa = math.atan((img_size - 2 * x) * math.sin(r_fov / 2) / img_size * math.cos(img_fov / 2))
+    beta = math.atan((img_size - 2 * y) * math.sin(r_fov / 2) / img_size * math.cos(img_fov / 2))
+    
+    
+    print('yaw:',yaw_pre,'tilt',tilt_pre)
+    print('alfa:',alfa,'beta',beta)
+    return alfa,beta
     
 def findFirstHit(sline,building_list):
     '''

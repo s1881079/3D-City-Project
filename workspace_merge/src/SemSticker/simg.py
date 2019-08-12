@@ -151,7 +151,7 @@ class SemImg():
         self.visFan = vis_fan
         
         
-    def genBbxCtLines(self,fur_dis = 50,obj_key = 'Door'):
+    def genBbxCtLines(self,fur_dis = 50,obj_key = 'Door',nor = True):
         '''
         generate list of line of sights based on object keyword and furest visible distance
         line of sight would be directly add to bbx as attribute 
@@ -177,9 +177,10 @@ class SemImg():
             return None
         
         for bbx in bbx_list:
-            yaw,tilt = bbx.imgCoorToAng(self._gsv.fov,self._gsv.size)
+            yaw,tilt = bbx.imgCoorToAng(self._gsv.fov,self._gsv.size,nor)
             los = self.genLos(fur_dis,yaw)
             bbx.setlos(los)
+            bbx.setLosPitch(tilt)
             
     def getMetaHead(self):
         '''

@@ -25,6 +25,12 @@ def writeObjInfoCsv(lst_objs,folder,filename):
     write images meta data 
     
     '''
+    if len(lst_objs) == 0:
+        return None
+    else:
+        pass
+    
+    
     metafile = folder + filename
     with open(metafile, 'w') as wfile:
         headlist = lst_objs[0].getMetaHead()

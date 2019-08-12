@@ -8,5 +8,6 @@ Created on Tue Jul  2 10:57:21 2019
 
 from .valConfig import *
 from .SemStick import *
+from .eval_specBD import *
 
 from .simg import SemImg

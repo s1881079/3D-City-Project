@@ -13,10 +13,11 @@ import os
 from google.cloud import vision
 from google.cloud.vision import types
 
-def localize_objects(file_name):
+def localize_objects(file_name,gg_api_cred):
 
     # Instantiates a client
-    os.environ["GOOGLE_APPLICATION_CREDENTIALS"]="../../../locked/GSVdl-600f404afce8.json"
+    #os.environ["GOOGLE_APPLICATION_CREDENTIALS"]="../../locked/GSVdl-600f404afce8.json"
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"]=gg_api_cred
     #environment credential setting - notice: not availale if clone
     
     client = vision.ImageAnnotatorClient()

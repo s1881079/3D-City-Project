@@ -14,9 +14,11 @@ from .bbx import Bbx
 from .ggvision import localize_objects
 
 #from .gsv import GSV
-import sys
-sys.path.append('../')
-from simg import SemImg
+#import sys
+#sys.path.append('../')
+#from simg import SemImg
+
+from .. import simg as sg
 
 __all__ = ['extSegSimg']
 
@@ -30,7 +32,7 @@ def showImg(win_name,img):
     cv2.destroyAllWindows()
 
 
-def extSegSimg(gsv,gsv_folder,detection_src = 'Google_Cloud_Vision',min_bbx_size = [50,70],max_wh_offset = 300):
+def extSegSimg(gsv,gsv_folder,gg_cv_cred,detection_src = 'Google_Cloud_Vision',min_bbx_size = [50,70],max_wh_offset = 300):
     '''
     extract region of interest based on image segmentation and write to new jpg file
     the ROI image is stored within a folder on the same file level with input image - temporall for object detection
@@ -79,7 +81,7 @@ def extSegSimg(gsv,gsv_folder,detection_src = 'Google_Cloud_Vision',min_bbx_size
     sorted_ctrs = sorted(ctrs, key=lambda ctr: cv2.boundingRect(ctr)[0])
     
     emp_objlist = [[],[],[]]
-    simg = SemImg(gsv,emp_objlist)
+    simg = sg.SemImg(gsv,emp_objlist)
     
     #extract region of interst
     for i, ctr in enumerate(sorted_ctrs):
@@ -90,10 +92,10 @@ def extSegSimg(gsv,gsv_folder,detection_src = 'Google_Cloud_Vision',min_bbx_size
         #print(x,y,w,h,abs(w-h))
         
         #extracting roid region - if not on edge, create a litle more outer space for detecting
-        if (y<5 or x<5 or y>img_height - 5 - h or x > img_width - 5 - w):
+        if (y<10 or x<10 or y>img_height - 10 - h or x > img_width - 10 - w):
             roi = image[y:y + h,x:x+w]
         else:
-            roi = image[y-5:y + h+5, x-5:x + w+5]
+            roi = image[y-10:y + h+10, x-10:x + w+10]
             
         #reduce noise area and thin rectangles
         if w > min_bbx_size[0] and h > min_bbx_size[1] and abs(w-h)<max_wh_offset:
@@ -103,13 +105,13 @@ def extSegSimg(gsv,gsv_folder,detection_src = 'Google_Cloud_Vision',min_bbx_size
             #print(roi_info)
             
             if detection_src == 'Google_Cloud_Vision':
-                segObjDetect_gcv(simg,roi_info,roi_folder)
+                segObjDetect_gcv(simg,roi_info,roi_folder,gg_cv_cred)
             
     return simg
 
-def segObjDetect_gcv(simg,roi_info,roi_folder):
+def segObjDetect_gcv(simg,roi_info,roi_folder,gg_cv_cred):
     roi_dir = roi_folder + roi_info[0] + '.jpg'
-    resp_objs = localize_objects(roi_dir)
+    resp_objs = localize_objects(roi_dir,gg_cv_cred)
     
     if len(resp_objs) == 0:
         #detect labels and if type of top labels falls in the category of tyoe of interest, add bbox base on the roi info 
@@ -117,7 +119,7 @@ def segObjDetect_gcv(simg,roi_info,roi_folder):
         
     for resp in resp_objs:
         bbx = Bbx(resp)
-        #print(bbx)
+        print(bbx.name)
         bbx.adaptView(roi_info,simg.gsv_size)
         #print('after addaptation')
         #print(bbx)
