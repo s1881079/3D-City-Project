@@ -4,8 +4,8 @@ This repository stores the codes and demo in a master dissertation project. A py
 
 ### Semsticker
 
-1.  [General introduction](src/SS_INTRO.md)
-2.  [Workspace file structure](src/FILE_STRUC.md)
+1.  [General introduction](https://github.com/s1881079/3D-City-Project/blob/branch-bkup/workspace_merge/src/SS_INTRO.md)
+2.  [Workspace file structure](https://github.com/s1881079/3D-City-Project/blob/branch-bkup/workspace_merge/FILE_STRUC.md)
 3. [Demo](https://github.com/s1881079/3D-City-Project/blob/branch-bkup/workspace_merge/src/SS_INTRO.md#rundemo)
 
 

@@ -12,23 +12,23 @@ This package is developed for automatically adding semantic building components 
 to use this package, the following dependencies need to be installed:
 - Python 3.4.9 (and later versions)
 - pyproj
-```bash
+```
 pip install --upgrade pyproj
 ```
 - fiona
-```bash
+```
 pip install --upgrade fiona
 ```
 - shapely
-```bash
+```
 pip install --upgrade shapely
 ```
 - OpenCV
-```bash
+```
 pip install --upgrade opencv
 ```
 - Google Cloud Vision client library
-```bash
+```
 pip install --upgrade google-cloud-vision
 ```
 
@@ -47,7 +47,7 @@ __Input_data__
 
 | Keyword      | Description
 | ----------- | ----------
-|"input_form"       | string indicating the [data input form](../data/DATA_INPUT.md) chosen
+|"input_form"       | string indicating the [data input form](https://github.com/s1881079/3D-City-Project/blob/branch-bkup/workspace_merge/data/DATA_INPUT.md) chosen
 |"url_txt"| directory of txt file containing [Google Earth](https://earth.google.com/web/) URLs
 |"ori_gsv_folder"| directory of folder containing pre-dpwnloaded geo-tagged images
 |"gsv_info_csv"| directory of csv file with geo-referenced information of images
@@ -86,7 +86,7 @@ __Pros_params__
 ### Demo
 <div id="rundemo"></div>
 demo program run in Linux terminal
-```bash
+```
 python3 demo_main.py
 ```
 
