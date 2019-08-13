@@ -40,15 +40,15 @@ __Authority__
 
 | Keyword      | Description
 | ----------- | ----------
-|"key_txt"       | directory of txt containing API key to Google Cloud Platform
-|"gg_credential"| directory of Google Cloud Vsion API credential (json file)
+|"key_txt"       | directory of txt containing [API key](https://developers.google.com/maps/documentation/streetview/get-api-key) to Google Cloud Platform
+|"gg_credential"| directory of [Google Cloud Vsion API credential](https://cloud.google.com/vision/docs/quickstart-client-libraries#client-libraries-install-python#before-you-begin) (json file)
 
 __Input_data__
 
 | Keyword      | Description
 | ----------- | ----------
-|"input_form"       | string indicating the [data input form]() chosen
-|"url_txt"| directory of txt file containing Google Earth URLs
+|"input_form"       | string indicating the [data input form](../data/DATA_INPUT.md) chosen
+|"url_txt"| directory of txt file containing [Google Earth](https://earth.google.com/web/) URLs
 |"ori_gsv_folder"| directory of folder containing pre-dpwnloaded geo-tagged images
 |"gsv_info_csv"| directory of csv file with geo-referenced information of images
 |"bd_shp"       | directory of folder storing building footprint data (currently only supports Esri shapefile)
